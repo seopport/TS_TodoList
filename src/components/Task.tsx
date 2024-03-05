@@ -8,14 +8,14 @@ import queryKeys from '../constant/queryKeys';
 import LoadingSpinner from './LoadingSpinner';
 import { Todo } from './TodoPage';
 
-const Task = ({ isDone }: { isDone: boolean }): ReactNode | null => {
+const Task = ({ isDone }: { isDone: boolean }): JSX.Element | null => {
   const { isLoading, isError, data: todos } = useQuery(queryKeys.TODOS, getTodos);
   console.log(todos);
 
-  // if (isError) {
-  //   alert('알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-  //   return;
-  // }
+  if (isError) {
+    alert('알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    return null;
+  }
 
   return (
     <>
