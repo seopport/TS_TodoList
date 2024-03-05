@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   todos: [],
@@ -14,5 +14,5 @@ const todoSlice = createSlice({
   },
 });
 
-export default todoSlice;
+export default todoSlice.reducer;
 export const { addTodo, completeTodo, deleteTodo } = todoSlice.actions;
