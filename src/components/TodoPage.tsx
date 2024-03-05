@@ -2,11 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import colors from '../constant/colors';
 import '../styles/font.css';
+import Task from './Task';
+
+export type IsDone = {
+  isDone: boolean;
+};
 
 const TodoPage = () => {
   return (
     <StContentWrap>
-      <StMainTitle>To Do List🌿</StMainTitle>
+      <StMainTitle>
+        To Do List<div style={{ position: 'absolute', left: '100%' }}>🌿</div>
+      </StMainTitle>
       <StDate>2024. 03. 05</StDate>
       <StTaskInputBox>
         <StInputBoxTitle>Task</StInputBoxTitle>
@@ -15,13 +22,20 @@ const TodoPage = () => {
         <StMemoTextArea placeholder='Memo' />
       </StTaskInputBox>
       <StTasksWrap>
-        <StInProgressTag>
-          <StStatusCircle $status={'in-progress'} />
-        </StInProgressTag>
-
-        <StDoneTag>
-          <StStatusCircle $status={'done'} />
-        </StDoneTag>
+        <div>
+          <StInProgressTag>
+            <StStatusCircle $status={'in-progress'} />
+            In Progress
+          </StInProgressTag>
+          <Task isDone={false} />
+        </div>
+        <div>
+          <StDoneTag>
+            <StStatusCircle $status={'done'} />
+            Done
+          </StDoneTag>
+          <Task isDone={true} />
+        </div>
       </StTasksWrap>
     </StContentWrap>
   );
