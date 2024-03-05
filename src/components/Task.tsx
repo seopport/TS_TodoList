@@ -1,10 +1,9 @@
 import React from 'react';
-import { IsDone } from './TodoPage';
 import styled from 'styled-components';
 import colors from '../constant/colors';
 import { StLine } from './Layout';
 
-const Task = ({ isDone }: IsDone) => {
+const Task = ({ isDone }: { isDone: boolean }) => {
   return (
     <StTaskBox>
       <StTitleInTaskBox>sdfsdf</StTitleInTaskBox>

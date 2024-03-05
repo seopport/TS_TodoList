@@ -6,12 +6,12 @@ import Task from './Task';
 
 // todo: RTK + react-query 이용 Todolist
 
-export type IsDone = {
-  isDone: boolean;
-};
+// export type IsDone = {
+//   isDone: boolean;
+// };
 
 const TodoPage = () => {
-  const [currentTime, setCurrentTime] = useState('');
+  const [currentTime, setCurrentTime] = useState<string>('');
 
   // 페이지가 렌더링될 때와 1초마다 시간을 갱신
   useEffect(() => {
