@@ -4,6 +4,8 @@ import colors from '../constant/colors';
 import '../styles/font.css';
 import Task from './Task';
 
+// todo: RTK + react-query 이용 Todolist
+
 export type IsDone = {
   isDone: boolean;
 };
