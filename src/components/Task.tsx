@@ -1,19 +1,41 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import colors from '../constant/colors';
 import { StLine } from './Layout';
+import { useQuery } from 'react-query';
+import { getTodos } from '../api/todoApi';
+import queryKeys from '../constant/queryKeys';
+import LoadingSpinner from './LoadingSpinner';
+import { Todo } from './TodoPage';
 
-const Task = ({ isDone }: { isDone: boolean }) => {
+const Task = ({ isDone }: { isDone: boolean }): ReactNode | null => {
+  const { isLoading, isError, data: todos } = useQuery(queryKeys.TODOS, getTodos);
+  console.log(todos);
+
+  // if (isError) {
+  //   alert('알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+  //   return;
+  // }
+
   return (
-    <StTaskBox>
-      <StTitleInTaskBox>sdfsdf</StTitleInTaskBox>
-      <StLine style={{ margin: '8px 0 10px 0', border: '1px solid black' }} />
-      <StMemoInTaskBox>sdfds</StMemoInTaskBox>
-      <StButtonWrap>
-        <StProgressButton>{isDone ? '되돌리기' : '완료'}</StProgressButton>
-        <StProgressButton>삭제</StProgressButton>
-      </StButtonWrap>
-    </StTaskBox>
+    <>
+      {isLoading && <LoadingSpinner />}
+      {todos
+        ?.filter((item: Todo) => item.isDone === isDone)
+        ?.map((item: Todo) => {
+          return (
+            <StTaskBox key={item.id}>
+              <StTitleInTaskBox>{item.title}</StTitleInTaskBox>
+              <StLine style={{ margin: '8px 0 10px 0', border: '1px solid black' }} />
+              <StContentInTaskBox>{item.content}</StContentInTaskBox>
+              <StButtonWrap>
+                <StProgressButton>{isDone ? '되돌리기' : '완료'}</StProgressButton>
+                <StProgressButton>삭제</StProgressButton>
+              </StButtonWrap>
+            </StTaskBox>
+          );
+        })}
+    </>
   );
 };
 
@@ -35,7 +57,7 @@ export const StProgressButton = styled.div`
   margin: 0 7px;
 `;
 
-export const StMemoInTaskBox = styled.div`
+export const StContentInTaskBox = styled.div`
   font-family: 'NanumSquareNeo-Variable';
   font-size: 12px;
   margin: 0 3px;

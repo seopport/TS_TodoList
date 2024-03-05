@@ -11,7 +11,7 @@ type Todo = {
   isDone: boolean;
 };
 
-const getTodos = async <T,>(): Promise<T> => {
+const getTodos = async () => {
   const response = await instance.get('');
   return response.data;
 };

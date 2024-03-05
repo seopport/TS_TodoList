@@ -10,26 +10,35 @@ import Task from './Task';
 //   isDone: boolean;
 // };
 
+export type Todo = {
+  id: string;
+  title: string;
+  content: string;
+  isDone: boolean;
+};
+
 const TodoPage = () => {
-  const [currentTime, setCurrentTime] = useState<string>('');
+  // const [currentTime, setCurrentTime] = useState<string>('');
+
+  const date = new Date().toLocaleString().slice(0, 12);
 
   // 페이지가 렌더링될 때와 1초마다 시간을 갱신
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const date = new Date().toLocaleString();
-      setCurrentTime(date);
-    }, 1000);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     const date = new Date().toLocaleString();
+  //     setCurrentTime(date);
+  //   }, 1000);
 
-    // 컴포넌트가 언마운트될 때 interval을 정리
-    return () => clearInterval(intervalId);
-  }, []);
+  //   // 컴포넌트가 언마운트될 때 interval을 정리
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   return (
     <StContentWrap>
       <StMainTitle>
         To Do List<div style={{ position: 'absolute', left: '100%' }}>🌿</div>
       </StMainTitle>
-      <StDate>{currentTime}</StDate>
+      <StDate>{date}</StDate>
       <StTaskInputBox>
         <StInputBoxTitle>Task</StInputBoxTitle>
         <StTitleInput placeholder='Enter Your to-do Here' />
