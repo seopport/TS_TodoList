@@ -9,7 +9,10 @@ type ChildrenProps = {
 const Layout = ({ children }: PropsWithChildren<ChildrenProps>) => {
   return (
     <StBodyWrap>
-      <StMainLayout>{children}</StMainLayout>
+      <StMainLayout>
+        <StLine />
+        {children}
+      </StMainLayout>
     </StBodyWrap>
   );
 };
@@ -25,8 +28,13 @@ const StMainLayout = styled.div`
   width: 800px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 100px;
+  flex-direction: column;
+`;
+
+export const StLine = styled.hr`
+  margin: 40px 0;
+  opacity: 60%;
+  width: 100%;
 `;
 
 export default Layout;
