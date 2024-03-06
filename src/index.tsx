@@ -7,11 +7,16 @@ import GlobalStyle from './styles/GlobalStyle';
 import { Provider } from 'react-redux';
 import store from './redux/config/configstore';
 import { ToastContainer } from 'react-toastify';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
+
+const persistor = persistStore(store);
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor} />
       <GlobalStyle />
       <App />
       <ToastContainer />

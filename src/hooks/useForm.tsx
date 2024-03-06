@@ -7,7 +7,7 @@ const useForm = (values: Pick<Todo, 'title' | 'content'>) => {
 
   // 값을 추적할 함수 정의
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-    // name은 요소에 직접 넣어준 값, value는 추적하고 있는 값
+    // name은 요소에서 직접 정의한 값, value는 추적하고 있는 값
     const { name, value } = e.target;
 
     // state를 풀어헤치고 name이라는 키(title, content)에 value 값을 할당

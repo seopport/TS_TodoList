@@ -14,7 +14,6 @@ const todoSlice = createSlice({
   initialState,
   reducers: {
     setStoreTodo: (state, action) => {
-      // console.log(action.payload);
       //페이로드: 투두 배열
       return { ...state, todos: action.payload };
     },
@@ -34,6 +33,10 @@ const todoSlice = createSlice({
     },
     deleteStoreTodo: (state, action: PayloadAction<string>) => {
       // 페이로드: 아이디
+      const newTodos = state.todos.filter((item) => {
+        return item.id !== action.payload;
+      });
+      return { ...state, todos: newTodos };
     },
   },
 });

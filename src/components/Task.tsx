@@ -10,6 +10,7 @@ import { Todo } from './TodoPage';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { deleteStoreTodo, setStoreTodo, updateStoreTodo } from '../redux/modules/todoSlice';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../redux/config/configstore';
 
 /*
  * 1. 투두 추가 (완료)
@@ -27,7 +28,7 @@ const Task = ({ isDone }: { isDone: boolean }): JSX.Element | null => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isLoading, isError, data: todos } = useQuery<Todo[]>(queryKeys.TODOS, getTodos);
-  const storeTodos = useAppSelector((state) => state?.todoSlice.todos);
+  const storeTodos = useAppSelector((state: RootState) => state?.todoSlice.todos);
 
   useEffect(() => {
     if (!isLoading && !isError) {
@@ -134,6 +135,7 @@ export const StTaskBox = styled.div`
   padding: 12px;
   box-sizing: border-box;
   position: relative;
+  cursor: pointer;
 `;
 
 export default Task;
