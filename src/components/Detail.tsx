@@ -13,7 +13,7 @@ const Detail = () => {
 
   const storeTodos = useAppSelector((state: RootState) => state?.todoSlice.todos);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const targetId = searchParams.get('id');
 
   return (
