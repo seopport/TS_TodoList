@@ -2,7 +2,6 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import todoSlice from '../modules/todoSlice';
 import storage from 'redux-persist/lib/storage';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer } from 'redux-persist';
-import { Todo } from '../../components/TodoPage';
 
 const rootReducer = combineReducers({
   todoSlice,

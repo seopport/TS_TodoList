@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import colors from '../constant/colors';
 import '../styles/font.css';
@@ -11,7 +11,6 @@ import { useAppDispatch } from '../hooks/reduxHooks';
 import { addStoreTodo } from '../redux/modules/todoSlice';
 import useForm from '../hooks/useForm';
 import 'react-toastify/dist/ReactToastify.css';
-import { Slide, toast } from 'react-toastify';
 import notification from '../util/notification';
 
 // todo: RTK + react-query 이용 Todolist
