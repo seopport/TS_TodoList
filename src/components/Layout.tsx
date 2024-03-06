@@ -1,17 +1,18 @@
 import React, { PropsWithChildren, ReactNode } from 'react';
 import styled from 'styled-components';
 import colors from '../constant/colors';
+import { Outlet } from 'react-router-dom';
 
 type ChildrenProps = {
   children: ReactNode;
 };
 
-const Layout = ({ children }: PropsWithChildren<ChildrenProps>) => {
+const Layout = () => {
   return (
     <StBodyWrap>
       <StMainLayout>
         <StLine />
-        {children}
+        <Outlet />
       </StMainLayout>
     </StBodyWrap>
   );

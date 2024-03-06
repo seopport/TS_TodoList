@@ -9,6 +9,7 @@ import LoadingSpinner from '../util/LoadingSpinner';
 import { Todo } from './TodoPage';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { deleteStoreTodo, setStoreTodo, updateStoreTodo } from '../redux/modules/todoSlice';
+import { useNavigate } from 'react-router-dom';
 
 /*
  * 1. 투두 추가 (완료)
@@ -17,13 +18,14 @@ import { deleteStoreTodo, setStoreTodo, updateStoreTodo } from '../redux/modules
  *
  * 선택
  * 1. form으로 변경 (완료)
- * 2. 인터셉터 로직 추가
+ * 2. 인터셉터 로직 추가(완료)
  *
  */
 
 const Task = ({ isDone }: { isDone: boolean }): JSX.Element | null => {
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { isLoading, isError, data: todos } = useQuery<Todo[]>(queryKeys.TODOS, getTodos);
   const storeTodos = useAppSelector((state) => state?.todoSlice.todos);
 
@@ -67,11 +69,11 @@ const Task = ({ isDone }: { isDone: boolean }): JSX.Element | null => {
   return (
     <>
       {isLoading && <LoadingSpinner />}
-      {todos
+      {storeTodos
         ?.filter((item: Todo) => item.isDone === isDone)
         ?.map((item: Todo) => {
           return (
-            <StTaskBox key={item.id}>
+            <StTaskBox key={item.id} onClick={() => navigate(`/detail?id=${item.id}`)}>
               <StTitleInTaskBox>{item.title}</StTitleInTaskBox>
               <StLine style={{ margin: '8px 0 10px 0', border: '1px solid black' }} />
               <StContentInTaskBox>{item.content}</StContentInTaskBox>
