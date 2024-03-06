@@ -14,7 +14,7 @@ const addTodo = async (newTodo: Todo) => {
   await instance.post('', newTodo);
 };
 
-const updateTodo = async ({ id, newTodo }: { id: string; newTodo: object }) => {
+const updateTodo = async ({ id, newTodo }: { id: string; newTodo: Partial<Todo> }) => {
   await instance.patch(`/${id}`, newTodo);
 };
 

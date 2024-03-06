@@ -32,9 +32,11 @@ const todoSlice = createSlice({
       });
       return { ...state, todos: newTodos };
     },
-    deleteTodo: (state, action) => {},
+    deleteStoreTodo: (state, action: PayloadAction<string>) => {
+      // 페이로드: 아이디
+    },
   },
 });
 
 export default todoSlice.reducer;
-export const { setStoreTodo, addStoreTodo, updateStoreTodo, deleteTodo } = todoSlice.actions;
+export const { setStoreTodo, addStoreTodo, updateStoreTodo, deleteStoreTodo } = todoSlice.actions;
