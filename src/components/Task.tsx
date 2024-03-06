@@ -119,6 +119,12 @@ export const StContentInTaskBox = styled.div`
   word-wrap: break-word;
   min-height: 30px;
   margin-bottom: 25px;
+  overflow: hidden; // 벗어나면 안보이게
+  text-overflow: ellipsis; // ...으로 표시하겠다
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 `;
 
 export const StTitleInTaskBox = styled.div`
@@ -130,7 +136,7 @@ export const StTitleInTaskBox = styled.div`
 
 export const StTaskBox = styled.div`
   font-family: 'NanumSquareNeo-Variable';
-  width: 100%;
+  width: 200px;
   background-color: ${colors.mainBeige};
   border: 1px solid black;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -139,6 +145,8 @@ export const StTaskBox = styled.div`
   box-sizing: border-box;
   position: relative;
   cursor: pointer;
+  max-height: 200px;
+  line-height: 16px;
 `;
 
 export default Task;

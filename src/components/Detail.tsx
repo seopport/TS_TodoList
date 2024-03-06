@@ -17,12 +17,19 @@ const Detail = () => {
   const targetId = searchParams.get('id');
 
   return (
-    <StTaskInputBox style={{ width: '400px', minHeight: '300px', justifyContent: 'flex-start' }}>
+    <StTaskInputBox
+      style={{
+        width: '450px',
+        minHeight: '300px',
+        justifyContent: 'flex-start',
+        fontFamily: 'NanumSquareNeo-Variable',
+      }}
+    >
       {storeTodos
         ?.filter((item) => item.id === targetId)
         ?.map((item) => {
           return (
-            <>
+            <React.Fragment key={item.id}>
               {!item.isDone ? (
                 <StInProgressTag style={{ width: '100%' }}>
                   <StStatusCircle $status={'in-progress'} />
@@ -38,7 +45,7 @@ const Detail = () => {
               <StContentsContainer>{item.title}</StContentsContainer>
               <StLine style={{ margin: '8px 0 10px 0', border: '1px solid black' }} />
               <StContentsContainer style={{ alignSelf: 'flex-start' }}>{item.content}</StContentsContainer>
-            </>
+            </React.Fragment>
           );
         })}
       <div style={{ display: 'flex', alignSelf: 'flex-end', marginTop: 'auto', alignItems: 'center' }}>
@@ -50,6 +57,7 @@ const Detail = () => {
 };
 
 export const StContentsContainer = styled.div`
+  line-height: 30px;
   margin: 10px 0;
 `;
 
