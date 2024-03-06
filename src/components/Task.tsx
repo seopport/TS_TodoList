@@ -1,27 +1,53 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import colors from '../constant/colors';
 import { StLine } from './Layout';
-import { useQuery } from 'react-query';
-import { getTodos } from '../api/todoApi';
+import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
+import { getTodos, updateTodo } from '../api/todoApi';
 import queryKeys from '../constant/queryKeys';
 import LoadingSpinner from './LoadingSpinner';
 import { Todo } from './TodoPage';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
+import { setStoreTodo, updateStoreTodo } from '../redux/modules/todoSlice';
+
+/*
+ * 1. 투두 추가 (완료)
+ * 2. 투두 삭제
+ * 3. 상태 토글 (완료)
+ */
 
 const Task = ({ isDone }: { isDone: boolean }): JSX.Element | null => {
-  const { isLoading, isError, data: todos } = useQuery(queryKeys.TODOS, getTodos);
-  console.log(todos);
+  const queryClient = useQueryClient();
+  const { isLoading, isError, data: todos } = useQuery<Todo[]>(queryKeys.TODOS, getTodos);
+
+  const updateMutation = useMutation(updateTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(queryKeys.TODOS);
+    },
+  });
+
+  const dispatch = useAppDispatch();
+
+  const storeTodos = useAppSelector((state) => state?.todoSlice.todos);
+
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      dispatch(setStoreTodo(todos));
+    }
+  }, [dispatch, isLoading, isError, todos]);
+
+  console.log(storeTodos);
 
   if (isError) {
     alert('알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
     return null;
   }
 
-  /*
-   * 1. 투두 추가
-   * 2. 투두 삭제
-   * 3. 상태 토글
-   */
+  const handleStatusButtonClick = (id: string) => {
+    dispatch(updateStoreTodo(id));
+    const newTodo = { isDone: !isDone };
+    updateMutation.mutate({ id, newTodo });
+  };
 
   return (
     <>
@@ -35,7 +61,9 @@ const Task = ({ isDone }: { isDone: boolean }): JSX.Element | null => {
               <StLine style={{ margin: '8px 0 10px 0', border: '1px solid black' }} />
               <StContentInTaskBox>{item.content}</StContentInTaskBox>
               <StButtonWrap>
-                <StProgressButton>{isDone ? '되돌리기' : '완료'}</StProgressButton>
+                <StProgressButton onClick={() => handleStatusButtonClick(item.id)}>
+                  {item.isDone ? '되돌리기' : '완료'}
+                </StProgressButton>
                 <StProgressButton>삭제</StProgressButton>
               </StButtonWrap>
             </StTaskBox>

@@ -1,16 +1,10 @@
 {
   "todos": [
     {
-      "id": "1234",
-      "title": "이건 타이틀",
-      "content": "이건 내용",
+      "id": "jcI1FWGqCQiyszuOhbrUr",
+      "title": "타입스크립트 너무어렵다..",
+      "content": "진짜 .. 어떡하지",
       "isDone": false
-    },
-    {
-      "id": "12345",
-      "title": "이건 타이틀",
-      "content": "이건 내용",
-      "isDone": true
     }
   ]
 }

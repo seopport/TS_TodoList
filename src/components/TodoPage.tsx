@@ -3,6 +3,13 @@ import styled from 'styled-components';
 import colors from '../constant/colors';
 import '../styles/font.css';
 import Task from './Task';
+import { useMutation, useQueryClient } from 'react-query';
+import { addTodo } from '../api/todoApi';
+import queryKeys from '../constant/queryKeys';
+import { nanoid } from 'nanoid';
+import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../hooks/reduxHooks';
+import { addStoreTodo } from '../redux/modules/todoSlice';
 
 // todo: RTK + react-query 이용 Todolist
 
@@ -18,9 +25,17 @@ export type Todo = {
 };
 
 const TodoPage = (): JSX.Element => {
+  const queryClient = useQueryClient();
+  const dispatch = useAppDispatch();
   const date = new Date().toLocaleString().slice(0, 12);
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+
+  const addMutation = useMutation(addTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(queryKeys.TODOS);
+    },
+  });
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setTitle(e.target.value);
@@ -29,7 +44,19 @@ const TodoPage = (): JSX.Element => {
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     setContent(e.target.value);
   };
-  const handleAddButtonClick = (): void => {};
+  const handleAddButtonClick = (): void => {
+    const newTodo: Todo = {
+      id: nanoid(),
+      title,
+      content,
+      isDone: false,
+    };
+
+    console.log(newTodo);
+
+    addMutation.mutate(newTodo);
+    dispatch(addStoreTodo(newTodo));
+  };
 
   return (
     <StContentWrap>

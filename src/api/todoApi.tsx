@@ -1,15 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { Todo } from '../components/TodoPage';
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_TODOS_URL,
 });
-
-type Todo = {
-  id: string;
-  title: string;
-  memo: string;
-  isDone: boolean;
-};
 
 const getTodos = async () => {
   const response = await instance.get('');
@@ -20,8 +14,12 @@ const addTodo = async (newTodo: Todo) => {
   await instance.post('', newTodo);
 };
 
-const deleteTodo = async (todoId: string) => {
-  await instance.delete(`/${todoId}`);
+const updateTodo = async ({ id, newTodo }: { id: string; newTodo: object }) => {
+  await instance.patch(`/${id}`, newTodo);
+};
+
+const deleteTodo = async (id: string) => {
+  await instance.delete(`/${id}`);
 };
 
 // 요청 인터셉터
@@ -51,4 +49,4 @@ instance.interceptors.response.use(
   }
 );
 
-export { instance, getTodos, addTodo, deleteTodo };
+export { instance, getTodos, addTodo, deleteTodo, updateTodo };
