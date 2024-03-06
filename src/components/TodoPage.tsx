@@ -7,10 +7,11 @@ import { useMutation, useQueryClient } from 'react-query';
 import { addTodo } from '../api/todoApi';
 import queryKeys from '../constant/queryKeys';
 import { nanoid } from 'nanoid';
-import { useDispatch } from 'react-redux';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { addStoreTodo } from '../redux/modules/todoSlice';
 import useForm from '../hooks/useForm';
+import 'react-toastify/dist/ReactToastify.css';
+import { Slide, toast } from 'react-toastify';
 
 // todo: RTK + react-query 이용 Todolist
 
@@ -55,7 +56,29 @@ const TodoPage = (): JSX.Element => {
     },
   });
 
-  const handleAddButtonClick = (): void => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+
+    if (!title.trim()) {
+      toast.warn('제목을 입력해주세요.', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: true,
+        transition: Slide,
+      });
+      return;
+    }
+
+    if (!content.trim()) {
+      toast.warn('내용을 입력해주세요.', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: true,
+        transition: Slide,
+      });
+      return;
+    }
+
     const newTodo: Todo = {
       id: nanoid(),
       title,
@@ -75,7 +98,7 @@ const TodoPage = (): JSX.Element => {
         To Do List<div style={{ position: 'absolute', left: '100%' }}>🌿</div>
       </StMainTitle>
       <StDate>{date}</StDate>
-      <StTaskInputBox>
+      <StTaskInputBox onSubmit={handleSubmit}>
         <StInputBoxTitle>Task</StInputBoxTitle>
         <StTitleInput
           type='text'
@@ -84,7 +107,7 @@ const TodoPage = (): JSX.Element => {
           onChange={handleValueChange}
           placeholder='Enter Your to-do Here'
         />
-        <StAddButton onClick={handleAddButtonClick}>추가</StAddButton>
+        <StAddButton type='submit'>추가</StAddButton>
         <StContentTextArea name='content' value={content} onChange={handleValueChange} placeholder='Memo' />
       </StTaskInputBox>
       <StTasksWrap>
@@ -154,7 +177,7 @@ export const StTasksWrap = styled.div`
   justify-content: space-between;
 `;
 
-export const StAddButton = styled.div`
+export const StAddButton = styled.button`
   cursor: pointer;
   position: absolute;
   top: 83px;
@@ -162,6 +185,8 @@ export const StAddButton = styled.div`
   display: block;
   transition: all 0.2s;
   font-size: 15px;
+  background-color: transparent;
+  border: none;
 
   &:hover {
     transform: scale(1.03);
@@ -194,7 +219,7 @@ export const StTitleInput = styled.input`
   box-sizing: border-box;
 `;
 
-export const StTaskInputBox = styled.div`
+export const StTaskInputBox = styled.form`
   width: 80%;
   padding: 20px;
   border: 1px solid black;

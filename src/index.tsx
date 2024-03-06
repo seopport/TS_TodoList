@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import GlobalStyle from './styles/GlobalStyle';
 import { Provider } from 'react-redux';
 import store from './redux/config/configstore';
+import { ToastContainer } from 'react-toastify';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -13,6 +14,7 @@ root.render(
     <Provider store={store}>
       <GlobalStyle />
       <App />
+      <ToastContainer />
     </Provider>
   </React.StrictMode>
 );
