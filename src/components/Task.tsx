@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import colors from '../constant/colors';
 import { StLine } from './Layout';
@@ -25,6 +25,7 @@ import { RootState } from '../redux/config/configstore';
 
 const Task = ({ isDone }: { isDone: boolean }): JSX.Element | null => {
   const queryClient = useQueryClient();
+  const containerRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isLoading, isError, data: todos } = useQuery<Todo[]>(queryKeys.TODOS, getTodos);
@@ -53,14 +54,16 @@ const Task = ({ isDone }: { isDone: boolean }): JSX.Element | null => {
   }
 
   // 상태 토글
-  const handleStatusButtonClick = (id: string) => {
+  const handleStatusButtonClick = (id: string, e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     dispatch(updateStoreTodo(id));
     const newTodo = { isDone: !isDone };
     updateMutation.mutate({ id, newTodo });
   };
 
   // 할일 삭제
-  const handleDeleteButtonClick = (id: string) => {
+  const handleDeleteButtonClick = (id: string, e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     if (window.confirm('정말 삭제하시겠습니까?')) {
       deleteMutation.mutate(id);
       dispatch(deleteStoreTodo(id));
@@ -78,11 +81,11 @@ const Task = ({ isDone }: { isDone: boolean }): JSX.Element | null => {
               <StTitleInTaskBox>{item.title}</StTitleInTaskBox>
               <StLine style={{ margin: '8px 0 10px 0', border: '1px solid black' }} />
               <StContentInTaskBox>{item.content}</StContentInTaskBox>
-              <StButtonWrap>
-                <StProgressButton onClick={() => handleStatusButtonClick(item.id)}>
+              <StButtonWrap ref={containerRef}>
+                <StProgressButton onClick={(e) => handleStatusButtonClick(item.id, e)}>
                   {item.isDone ? '되돌리기' : '완료'}
                 </StProgressButton>
-                <StProgressButton onClick={() => handleDeleteButtonClick(item.id)}>삭제</StProgressButton>
+                <StProgressButton onClick={(e) => handleDeleteButtonClick(item.id, e)}>삭제</StProgressButton>
               </StButtonWrap>
             </StTaskBox>
           );

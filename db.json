@@ -1,21 +1,9 @@
 {
   "todos": [
     {
-      "id": "pR2itoO6Xo2MomWqaXUeB",
-      "title": "dfsd",
-      "content": "dfdfs",
-      "isDone": true
-    },
-    {
-      "id": "L65Kocqd5bRqXkxwjELq9",
-      "title": "ㄴㅇㄹㅇㄹㄴ",
-      "content": "ㅇㄴㄹㅇㄹ",
-      "isDone": false
-    },
-    {
-      "id": "wck7TKjTB0VD2G3W82oWp",
-      "title": "ㅇㄹㄴㅇㄹ",
-      "content": "ㅇㄴ런ㅇ\n",
+      "id": "FfOeM5LECna7GINly30Dc",
+      "title": "타입스크립트 공부",
+      "content": "....................너무어렵다.",
       "isDone": false
     }
   ]
