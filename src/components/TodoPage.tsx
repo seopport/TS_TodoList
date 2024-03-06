@@ -12,6 +12,7 @@ import { addStoreTodo } from '../redux/modules/todoSlice';
 import useForm from '../hooks/useForm';
 import 'react-toastify/dist/ReactToastify.css';
 import { Slide, toast } from 'react-toastify';
+import notification from '../util/notification';
 
 // todo: RTK + react-query 이용 Todolist
 
@@ -60,22 +61,12 @@ const TodoPage = (): JSX.Element => {
     e.preventDefault();
 
     if (!title.trim()) {
-      toast.warn('제목을 입력해주세요.', {
-        position: 'top-center',
-        autoClose: 2000,
-        hideProgressBar: true,
-        transition: Slide,
-      });
+      notification('제목을 입력해주세요.', 'warn');
       return;
     }
 
     if (!content.trim()) {
-      toast.warn('내용을 입력해주세요.', {
-        position: 'top-center',
-        autoClose: 2000,
-        hideProgressBar: true,
-        transition: Slide,
-      });
+      notification('내용을 입력해주세요.', 'warn');
       return;
     }
 

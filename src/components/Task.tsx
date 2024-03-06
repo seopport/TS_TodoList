@@ -2,21 +2,21 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import colors from '../constant/colors';
 import { StLine } from './Layout';
-import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deleteTodo, getTodos, updateTodo } from '../api/todoApi';
 import queryKeys from '../constant/queryKeys';
-import LoadingSpinner from './LoadingSpinner';
+import LoadingSpinner from '../util/LoadingSpinner';
 import { Todo } from './TodoPage';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { deleteStoreTodo, setStoreTodo, updateStoreTodo } from '../redux/modules/todoSlice';
 
 /*
  * 1. 투두 추가 (완료)
- * 2. 투두 삭제
+ * 2. 투두 삭제 (완료)
  * 3. 상태 토글 (완료)
  *
  * 선택
- * 1. form으로 변경
+ * 1. form으로 변경 (완료)
  * 2. 인터셉터 로직 추가
  *
  */
@@ -45,19 +45,18 @@ const Task = ({ isDone }: { isDone: boolean }): JSX.Element | null => {
     },
   });
 
-  console.log(storeTodos);
-
   if (isError) {
-    alert('알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
     return null;
   }
 
+  // 상태 토글
   const handleStatusButtonClick = (id: string) => {
     dispatch(updateStoreTodo(id));
     const newTodo = { isDone: !isDone };
     updateMutation.mutate({ id, newTodo });
   };
 
+  // 할일 삭제
   const handleDeleteButtonClick = (id: string) => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       deleteMutation.mutate(id);
