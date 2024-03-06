@@ -29,6 +29,7 @@ const StMainLayout = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding-bottom: 40px;
 `;
 
 export const StLine = styled.hr`

@@ -10,6 +10,7 @@ import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { addStoreTodo } from '../redux/modules/todoSlice';
+import useForm from '../hooks/useForm';
 
 // todo: RTK + react-query 이용 Todolist
 
@@ -28,8 +29,25 @@ const TodoPage = (): JSX.Element => {
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
   const date = new Date().toLocaleString().slice(0, 12);
-  const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>('');
+
+  // #region 커스텀 훅 이전
+  // const [title, setTitle] = useState<string>('');
+  // const [content, setContent] = useState<string>('');
+
+  // const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  //   setTitle(e.target.value);
+  // };
+
+  // const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+  //   setContent(e.target.value);
+  // };
+  // #endregion
+
+  const { formState, handleValueChange, resetForm } = useForm({
+    title: '',
+    content: '',
+  });
+  const { title, content } = formState;
 
   const addMutation = useMutation(addTodo, {
     onSuccess: () => {
@@ -37,13 +55,6 @@ const TodoPage = (): JSX.Element => {
     },
   });
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setTitle(e.target.value);
-  };
-
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    setContent(e.target.value);
-  };
   const handleAddButtonClick = (): void => {
     const newTodo: Todo = {
       id: nanoid(),
@@ -52,10 +63,10 @@ const TodoPage = (): JSX.Element => {
       isDone: false,
     };
 
-    console.log(newTodo);
-
     addMutation.mutate(newTodo);
     dispatch(addStoreTodo(newTodo));
+
+    resetForm();
   };
 
   return (
@@ -66,9 +77,15 @@ const TodoPage = (): JSX.Element => {
       <StDate>{date}</StDate>
       <StTaskInputBox>
         <StInputBoxTitle>Task</StInputBoxTitle>
-        <StTitleInput value={title} onChange={handleTitleChange} placeholder='Enter Your to-do Here' />
+        <StTitleInput
+          type='text'
+          name='title'
+          value={title}
+          onChange={handleValueChange}
+          placeholder='Enter Your to-do Here'
+        />
         <StAddButton onClick={handleAddButtonClick}>추가</StAddButton>
-        <StContentTextArea value={content} onChange={handleContentChange} placeholder='Memo' />
+        <StContentTextArea name='content' value={content} onChange={handleValueChange} placeholder='Memo' />
       </StTaskInputBox>
       <StTasksWrap>
         <div>
