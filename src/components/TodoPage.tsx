@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import colors from '../constant/colors';
 import '../styles/font.css';
@@ -17,21 +17,19 @@ export type Todo = {
   isDone: boolean;
 };
 
-const TodoPage = () => {
-  // const [currentTime, setCurrentTime] = useState<string>('');
-
+const TodoPage = (): JSX.Element => {
   const date = new Date().toLocaleString().slice(0, 12);
+  const [title, setTitle] = useState<string>('');
+  const [content, setContent] = useState<string>('');
 
-  // 페이지가 렌더링될 때와 1초마다 시간을 갱신
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     const date = new Date().toLocaleString();
-  //     setCurrentTime(date);
-  //   }, 1000);
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setTitle(e.target.value);
+  };
 
-  //   // 컴포넌트가 언마운트될 때 interval을 정리
-  //   return () => clearInterval(intervalId);
-  // }, []);
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+    setContent(e.target.value);
+  };
+  const handleAddButtonClick = (): void => {};
 
   return (
     <StContentWrap>
@@ -41,9 +39,9 @@ const TodoPage = () => {
       <StDate>{date}</StDate>
       <StTaskInputBox>
         <StInputBoxTitle>Task</StInputBoxTitle>
-        <StTitleInput placeholder='Enter Your to-do Here' />
-        <StAddButton>추가</StAddButton>
-        <StMemoTextArea placeholder='Memo' />
+        <StTitleInput value={title} onChange={handleTitleChange} placeholder='Enter Your to-do Here' />
+        <StAddButton onClick={handleAddButtonClick}>추가</StAddButton>
+        <StContentTextArea value={content} onChange={handleContentChange} placeholder='Memo' />
       </StTaskInputBox>
       <StTasksWrap>
         <div>
@@ -130,7 +128,7 @@ export const StAddButton = styled.div`
   }
 `;
 
-export const StMemoTextArea = styled.textarea`
+export const StContentTextArea = styled.textarea`
   background-color: transparent;
   resize: none;
   width: 80%;
