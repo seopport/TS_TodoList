@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import colors from '../constant/colors';
 import '../styles/font.css';
@@ -29,7 +29,17 @@ export type Todo = {
 const TodoPage = (): JSX.Element => {
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
-  const date = new Date().toLocaleString().slice(0, 12);
+
+  const [liveTime, setLiveTime] = useState<string>('');
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const date = new Date().toLocaleString();
+      setLiveTime(date);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [liveTime]);
 
   // #region 커스텀 훅 이전
   // const [title, setTitle] = useState<string>('');
@@ -87,7 +97,7 @@ const TodoPage = (): JSX.Element => {
       <StMainTitle>
         To Do List<div style={{ position: 'absolute', left: '100%' }}>🌿</div>
       </StMainTitle>
-      <StDate>{date}</StDate>
+      {liveTime ? <StDate>{liveTime}</StDate> : <StDate>Loading...</StDate>}
       <StTaskInputBox onSubmit={handleSubmit}>
         <StInputBoxTitle>Task</StInputBoxTitle>
         <StTitleInput

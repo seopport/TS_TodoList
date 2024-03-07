@@ -14,16 +14,15 @@ const todoSlice = createSlice({
   initialState,
   reducers: {
     setStoreTodo: (state, action) => {
-      //페이로드: 투두 배열
+      //payload: todo 배열
       return { ...state, todos: action.payload };
     },
-    addStoreTodo: (state, action: PayloadAction<Todo>): void => {
-      // 페이로드: 투두 객체 하나
-      state.todos?.push(action.payload);
+    addStoreTodo: (state, action: PayloadAction<Todo>): SliceState => {
+      // payload: todo 객체 하나
+      return { ...state, todos: [...state.todos, action.payload] };
     },
     updateStoreTodo: (state, action: PayloadAction<string>) => {
-      console.log('first');
-      //페이로드: 아이디
+      //payload: todo 아이디
       const newTodos = state.todos.map((item) => {
         if (item.id === action.payload) {
           return { ...item, isDone: !item.isDone };
@@ -32,7 +31,7 @@ const todoSlice = createSlice({
       return { ...state, todos: newTodos };
     },
     deleteStoreTodo: (state, action: PayloadAction<string>) => {
-      // 페이로드: 아이디
+      // payload: todo 아이디
       const newTodos = state.todos.filter((item) => {
         return item.id !== action.payload;
       });

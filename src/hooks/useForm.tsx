@@ -5,7 +5,7 @@ const useForm = (values: Pick<Todo, 'title' | 'content'>) => {
   // 초기 state를 받아서 useState 생성
   const [formState, setFormState] = useState(values);
 
-  // 값을 추적할 함수 정의
+  // 값을 추적할 onChange 핸들러 함수 정의
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     // name은 요소에서 직접 정의한 값, value는 추적하고 있는 값
     const { name, value } = e.target;
