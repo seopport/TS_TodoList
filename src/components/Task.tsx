@@ -54,7 +54,8 @@ const Task = ({ isDone }: { isDone: boolean }): JSX.Element | null => {
   }
 
   // 상태 토글
-  const handleStatusButtonClick = (id: string, e: React.MouseEvent<HTMLDivElement>) => {
+  // id는 Todo에 있는 id 타입으로 정함
+  const handleStatusButtonClick = (id: Todo['id'], e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     dispatch(updateStoreTodo(id));
     const newTodo = { isDone: !isDone };
@@ -62,6 +63,7 @@ const Task = ({ isDone }: { isDone: boolean }): JSX.Element | null => {
   };
 
   // 할일 삭제
+  // id는 string으로 정함
   const handleDeleteButtonClick = (id: string, e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     if (window.confirm('정말 삭제하시겠습니까?')) {

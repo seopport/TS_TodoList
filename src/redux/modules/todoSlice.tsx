@@ -21,7 +21,7 @@ const todoSlice = createSlice({
       // payload: todo 객체 하나
       return { ...state, todos: [...state.todos, action.payload] };
     },
-    updateStoreTodo: (state, action: PayloadAction<string>) => {
+    updateStoreTodo: (state, action: PayloadAction<Todo['id']>) => {
       //payload: todo 아이디
       const newTodos = state.todos.map((item) => {
         if (item.id === action.payload) {

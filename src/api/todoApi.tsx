@@ -7,20 +7,20 @@ const instance = axios.create({
 });
 
 const getTodos = async () => {
-  const response = await instance.get('');
+  const response = await instance.get<Todo[]>('');
   return response.data;
 };
 
 const addTodo = async (newTodo: Todo) => {
-  await instance.post('', newTodo);
+  await instance.post<Todo[]>('', newTodo);
 };
 
 const updateTodo = async ({ id, newTodo }: { id: string; newTodo: Partial<Todo> }) => {
-  await instance.patch(`/${id}`, newTodo);
+  await instance.patch<Todo[]>(`/${id}`, newTodo);
 };
 
 const deleteTodo = async (id: string) => {
-  await instance.delete(`/${id}`);
+  await instance.delete<Todo[]>(`/${id}`);
 };
 
 // 요청 인터셉터
